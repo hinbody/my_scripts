@@ -1,3 +1,4 @@
+#! /usr/bin/env ruby
 # This script creates the name of a basebal team, then provides an interface to
 # add players to the team
 require 'json'
