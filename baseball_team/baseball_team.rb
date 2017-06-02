@@ -1,9 +1,10 @@
 # This script creates the name of a basebal team, then provides an interface to
 # add players to the team
+require 'json'
 
 prompt = "> "
 
-def add_player(team)
+def add_player(team, team_name)
   prompt = "> "
   print prompt
   player = $stdin.gets.chomp
@@ -14,15 +15,15 @@ def add_player(team)
     puts "#{player}'s position:"
     print prompt
     position  = $stdin.gets.chomp
-    team[player] = {'No.' => number, 'Position' => position}
+    team[team_name] = {player => {'No.' => number, 'Position' => position}}
   end
   player
 end
 
-def adding_player(player, team)
+def adding_player(player, team, team_name)
   if player != ''
     puts "Adding #{player} as "
-    team[player].each do |k,v|
+    team[team_name][player].each do |k,v|
       puts "\t#{k} => #{v}"
     end
   end
@@ -34,19 +35,23 @@ team_name = $stdin.gets.chomp
 team = {}
 
 puts "Enter the name of the first player"
-player = add_player(team)
-adding_player(player, team)
+player = add_player(team, team_name)
+adding_player(player, team, team_name)
 
 while player != ''
   puts "Enter the name of the next player"
-  player = add_player(team)
-  adding_player(player, team)
+  player = add_player(team, team_name)
+  adding_player(player, team, team_name)
 end
 
-puts "Your team, #{team_name}, consists of the following players:"
-team.each do |key, value|
-  puts "Name => #{key}"
-  value.each do |k,v|
-    puts "\t#{k} => #{v}"
-  end
-end
+tha_json = JSON.pretty_generate(team)
+json_file = open('teams.json', 'a')
+json_file.write(tha_json)
+json_file.close
+#puts "Your team, #{team_name}, consists of the following players:"
+#team.each do |key, value|
+#  puts "Name => #{key}"
+#  value.each do |k,v|
+#    puts "\t#{k} => #{v}"
+#  end
+#end
