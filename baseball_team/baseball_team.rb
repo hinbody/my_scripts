@@ -49,6 +49,7 @@ end
 tha_json = JSON.pretty_generate(team)
 json_file = open('teams.json', 'a')
 json_file.write(tha_json)
+json_file.write("\n")
 json_file.close
 #puts "Your team, #{team_name}, consists of the following players:"
 #team.each do |key, value|
