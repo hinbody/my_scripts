@@ -6,41 +6,47 @@ prompt = "> "
 def add_player(team)
   prompt = "> "
   print prompt
-  player = [$stdin.gets.chomp]
-  if player[0] != ''
-    puts "#{player[0]}'s number:"
+  player = $stdin.gets.chomp
+  if player != ''
+    puts "#{player}'s number:"
     print prompt
-    player[1] = $stdin.gets.chomp
-    puts "#{player[0]}'s position:"
+    number  = $stdin.gets.chomp
+    puts "#{player}'s position:"
     print prompt
-    player[2] = $stdin.gets.chomp
-    team.push(player)
+    position  = $stdin.gets.chomp
+    team[player] = {'No.' => number, 'Position' => position}
   end
   player
 end
 
-def adding_player(player)
-  if player[0] != ''
-    puts "Adding #{player[0]} as No. #{player[1]} Playing #{player[2]}"
+def adding_player(player, team)
+  if player != ''
+    puts "Adding #{player} as "
+    team[player].each do |k,v|
+      puts "\t#{k} => #{v}"
+    end
   end
 end
 
 puts "Enter the name of your team"
 print prompt
 team_name = $stdin.gets.chomp
-team = []
+team = {}
 
 puts "Enter the name of the first player"
 player = add_player(team)
-adding_player(player)
+adding_player(player, team)
 
-while player[0] != ''
+while player != ''
   puts "Enter the name of the next player"
   player = add_player(team)
-  adding_player(player)
+  adding_player(player, team)
 end
 
 puts "Your team, #{team_name}, consists of the following players:"
-team.each do |p|
-  puts "#{p[0]}, No: #{p[1]}, Playing: #{p[1]}"
+team.each do |key, value|
+  puts "Name => #{key}"
+  value.each do |k,v|
+    puts "\t#{k} => #{v}"
+  end
 end
