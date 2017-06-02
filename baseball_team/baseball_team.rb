@@ -15,7 +15,7 @@ def add_player(team, team_name)
     puts "#{player}'s position:"
     print prompt
     position  = $stdin.gets.chomp
-    team[team_name] = {player => {'No.' => number, 'Position' => position}}
+    team[team_name][player]  = {'No.' => number, 'Position' => position}
   end
   player
 end
@@ -33,6 +33,7 @@ puts "Enter the name of your team"
 print prompt
 team_name = $stdin.gets.chomp
 team = {}
+team[team_name] = {}
 
 puts "Enter the name of the first player"
 player = add_player(team, team_name)
